@@ -7,7 +7,7 @@ const questions = [{
     type: 'input',
     name: 'fileName',
     message: 'What is the file name',
-    default: 'Coming soon'
+    default: 'README.md'
 }, {
     type: 'input',
     name: 'title',
@@ -37,26 +37,37 @@ const questions = [{
     type: 'input',
     name: 'tests',
     message: "Please provide information on how to run tests to ensure the project's functionality",
-    default: ''
+    default: 'At the moment, there are no automated tests implemented for this project.'
 }, {
     type: 'input',
-    name: 'questions',
-    message: 'Please introduce your GitHub Username and email'
+    name: 'questions1',
+    message: 'Please introduce your GitHub Username',
+    default: 'No username provided'
+},
+{
+    type: 'input',
+    name: 'questions2',
+    message: 'Please introduce your email',
+    default:'No email provided'
 }];
 
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
+    fs.writeFile(fileName, mdgen(data), () => {
+        console.log('File created')
+    })
 }
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer
         .prompt(questions)
-        .then((response) => {
-            fs.writeFile('README.md',writeToFile(null,re), () => console.log('readme created') )
+        .then((response) => {writeToFile(response.fileName, response)
         })
+        
 }
 
-Function call to initialize app
+
+// Function call to initialize app
 init();
