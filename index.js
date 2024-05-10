@@ -1,8 +1,10 @@
-// TODO: Include packages needed for this application
+// Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
 const mdgen = require('./utils/generateMarkdown.js');
-// TODO: Create an array of questions for user input
+
+
+// Creates an array of questions for user input
 const questions = [{
     type: 'input',
     name: 'fileName',
@@ -32,40 +34,51 @@ const questions = [{
     type: "list",
     name: "license",
     message: "What license will be used?",
-    choices: ['MIT', 'Apache 2.0', 'GNU General Public 3.0', 'ISC', 'Mozilla Public 2.0', 'BSD 2-Clause', 'WTFPL'],
+    choices: ['MIT', 'Apache_2.0', 'GNU_GPL_3.0', 'ISC', 'Mozilla_public_2.0', 'BSD_2_Clause', 'WTFPL'],
 }, {
+    type: 'input',
+    name: 'contributing',
+    message: 'Please provide contributing instructions for this project',
+    default: "No contributions accepted at the moment"
+},
+{
     type: 'input',
     name: 'tests',
     message: "Please provide information on how to run tests to ensure the project's functionality",
     default: 'At the moment, there are no automated tests implemented for this project.'
 }, {
     type: 'input',
-    name: 'questions1',
+    name: 'github',
     message: 'Please introduce your GitHub Username',
     default: 'No username provided'
 },
 {
     type: 'input',
-    name: 'questions2',
+    name: 'email',
     message: 'Please introduce your email',
-    default:'No email provided'
+    default: 'No email provided'
 }];
 
 
-// TODO: Create a function to write README file
+// Creates a function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, mdgen(data), () => {
-        console.log('File created')
-    })
+    fs.writeFile(fileName, mdgen(data), (err) => {
+        if (err) {
+            console.error('Error writing file');
+        } else { console.log('File created'); }
+    });
 }
 
-// TODO: Create a function to initialize app
+// Creates a function to initialize app
 function init() {
     inquirer
         .prompt(questions)
-        .then((response) => {writeToFile(response.fileName, response)
+        .then((response) => {
+            writeToFile(response.fileName, response)
         })
-        
+        .catch((error) => {
+            console.error(`An error has occurred ${error}`)
+        })
 }
 
 

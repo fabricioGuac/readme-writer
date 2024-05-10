@@ -1,80 +1,43 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
+// Creates a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-  let choice = '';
-
-  switch (license) {
-    case 'MIT':
-      choice = 'MIT-yellow'
-      break;
-    case 'Apache 2.0':
-      choice = 'Apache%202.0-blue'
-      break;
-    case 'GNU General Public 3.0':
-      choice = 'GPLv3-blue'
-      break;
-    case 'Mozilla Public':
-      choice = 'MPL_2.0-brightgreen'
-      break;
-    case 'BSD 2-Clause':
-      choice = 'BSD_2--Clause-orange'
-      break;
-    case 'WTFPL':
-      choice = 'WTFPL-brightgreen'
-      break;
-    case 'ISC':
-      choice = 'ISC-blue'
-      break;
-  }
-
-  return `![License:GitHub](https://img.shields.io/badge/License-${choice}.svg)`
-
-
+  if (license !== 'None') {
+    return `![License:${license}](https://img.shields.io/badge/License-${license}-yellow.svg)`
+  } else { return ''; }
 }
 
-// TODO: Create a function that returns the license link
+
+// Creates a function that returns the license link
 // If there is no license, return an empty string
-function renderLicenseLink(license) { 
-  let choice = '';
+function renderLicenseLink(license) {
 
-  switch (license) {
-    case 'MIT':
-      choice = 'mit'
-      break;
-    case 'Apache 2.0':
-      choice = 'apache-2.0'
-      break;
-    case 'GNU General Public 3.0':
-      choice = 'gpl-3.0'
-      break;
-    case 'Mozilla Public':
-      choice = 'mpl-2.0'
-      break;
-    case 'BSD 2-Clause':
-      choice = 'bsd-2-clause'
-      break;
-    case 'WTFPL':
-      choice = 'wtfpl'
-      break;
-    case 'ISC':
-      choice = 'isc'
-      break;
+  if (license !== 'None') {
+    return `- [${license}](#License)`
+
   }
-  return `https://choosealicense.com/licenses/${choice}`
+  else { return ''; }
 }
 
-// TODO: Create a function that returns the license section of README
+// Creates a function that returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
-  return `
-  
-  `
- }
+  if (license !== 'None') {
+    return `
+## License 
 
-// TODO: Create a function to generate markdown for README
+This project is licensed under the ${license} license.
+
+`} else {
+    return '';
+  }
+}
+
+// Creates a function to generate markdown for README file
 function generateMarkdown(data) {
   return `# ${data.title}
-## Description
+
+${renderLicenseBadge(data.license)}
+## Description 
 
 ${data.description}
 
@@ -83,7 +46,7 @@ ${data.description}
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
+${renderLicenseLink(data.license)}
 - [Contributing](#contributing)
 - [Tests](#Tests)
 - [Questions](#Questions)
@@ -98,24 +61,12 @@ ${data.installation}
 ${data.usage}
 
 
-## License
-
 ${renderLicenseSection(data.license)}
 
 
 ## Contributing
 
-We welcome contributions to this project! To contribute, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes.
-4. Test your changes locally.
-5. Commit your changes with a clear commit message.
-6. Push your changes to your fork.
-7. Submit a pull request to the main repository's branch.
-
-Thank you for contributing to our project!
+${data.contributing}
 
 ## Tests
 
@@ -123,12 +74,7 @@ ${data.tests}
 
 ## Questions
 
-If you have any questions or need assistance with the project, feel free to reach out to us:
-
-- **GitHub Profile:** [${data.questions1}](https://github.com/${data.questions1})
-- **Email:** ${data.questions2}
-
-Feel free to contact us for any clarifications or feedback. We appreciate yo
+If you have any questions or need help with the project, feel free to contact me through the following channels: - Connect with me on GitHub at [${data.github}](https://github.com/${data.github})  - Drop me an email at [${data.email}](https://github.com/${data.email})   Don't hesitate to reach out if you need any clarifications or want to share feedback. I'm here to assist you!
 
 `;
 }
